@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca2eec49e509a549833a4bb89e22b9c, type: 3}
+  m_Name: Death God Combat Stance State
+  m_EditorClassIdentifier: 
+  aiCharacterAttacks:
+  - {fileID: 11400000, guid: b443a56de2e081a4eae61b5f65c13f96, type: 2}
+  - {fileID: 11400000, guid: 022cb767f11fb4249a06f4cb1f0af39f, type: 2}
+  - {fileID: 11400000, guid: ec3e9c6feacb16a4ab33ed16a0cb2e4e, type: 2}
+  - {fileID: 11400000, guid: 0bf6c5ed314c3014ba3a30305cb6da73, type: 2}
+  - {fileID: 11400000, guid: e4296243d1cb6d64eb01307428fd04f1, type: 2}
+  - {fileID: 11400000, guid: d2220a0ed15d83a489d10b9d59b75810, type: 2}
+  - {fileID: 11400000, guid: fcdc71889a820ab4980e24880a32dcd0, type: 2}
+  - {fileID: 11400000, guid: f2586733fa747a643838990733780f88, type: 2}
+  - {fileID: 11400000, guid: a683ef0a7bc60c949ac3c869e5a50087, type: 2}
+  - {fileID: 11400000, guid: e78cba12a2c72204db10954c2215025b, type: 2}
+  potentialAttacks: []
+  chosenAttack: {fileID: 0}
+  previousAttack: {fileID: 0}
+  canPerformCombo: 0
+  chanceToPerformCombo: 25
+  maximumEngagementDistance: 10

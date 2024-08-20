@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca2eec49e509a549833a4bb89e22b9c, type: 3}
+  m_Name: Death Sovereign Combat Stance State
+  m_EditorClassIdentifier: 
+  aiCharacterAttacks:
+  - {fileID: 11400000, guid: 9618117c93c23e64bb89035c695bf02a, type: 2}
+  - {fileID: 11400000, guid: 5c7dc505dc867ad4abec611f6ce9dbdf, type: 2}
+  - {fileID: 11400000, guid: e5013374b1d1ae04d82cdc17931e0d5d, type: 2}
+  - {fileID: 11400000, guid: b8528d60e8a7bec4a80ffd60a3c6eae3, type: 2}
+  - {fileID: 11400000, guid: 46d6afe8834cad0479fdac3919242c72, type: 2}
+  - {fileID: 11400000, guid: d1d20da27251a7e44b163c693bc272e6, type: 2}
+  potentialAttacks: []
+  chosenAttack: {fileID: 0}
+  previousAttack: {fileID: 0}
+  canPerformCombo: 0
+  chanceToPerformCombo: 25
+  maximumEngagementDistance: 10
