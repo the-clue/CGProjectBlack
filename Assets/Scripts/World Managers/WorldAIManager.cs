@@ -79,6 +79,7 @@ public class WorldAIManager : MonoBehaviour
         }
 
         spawnedInCharacters.Clear();
+        spawnedInBosses.Clear();
     }
 
     private void DisableAllCharacters()

@@ -13,6 +13,9 @@ public class PlayerUIEquipmentManager : MonoBehaviour
     [SerializeField] Image rightHandSlot01;
     [SerializeField] Image rightHandSlot02;
     [SerializeField] Image rightHandSlot03;
+    private Button rightHandSlot01Button;
+    private Button rightHandSlot02Button;
+    private Button rightHandSlot03Button;
 
     [Header("Equipment Inventory")]
     public EquipmentType currentSelectedEquipmentSlot;
@@ -21,10 +24,18 @@ public class PlayerUIEquipmentManager : MonoBehaviour
     [SerializeField] Transform equipmentInventoryContentWindow;
     [SerializeField] Item currentSelectedItem;
 
+    private void Awake()
+    {
+        rightHandSlot01Button = rightHandSlot01.GetComponentInParent<Button>(true);
+        rightHandSlot02Button = rightHandSlot02.GetComponentInParent<Button>(true);
+        rightHandSlot03Button = rightHandSlot03.GetComponentInParent<Button>(true);
+    }
+
     public void OpenEquipmentMenu()
     {
         // menu.SetActive(false);
         PlayerUIManager.instance.menuWindowIsOpen = true;
+        ToggleEquipmentButtons(true);
         menu.SetActive(true);
         equipmentInventoryWindow.SetActive(false);
         RefreshMenu();
@@ -36,20 +47,37 @@ public class PlayerUIEquipmentManager : MonoBehaviour
         RefreshWeaponSlotIcons();
     }
 
+    private void ToggleEquipmentButtons(bool isEnabled)
+    {
+        rightHandSlot01Button.interactable = isEnabled;
+        rightHandSlot02Button.interactable = isEnabled;
+        rightHandSlot03Button.interactable = isEnabled;
+
+        // This version has a bug where the background color turns to default because the button has no more control
+        // rightHandSlot01Button.enabled = isEnabled;
+        // rightHandSlot02Button.enabled = isEnabled;
+        // rightHandSlot03Button.enabled = isEnabled;
+
+        // TO DO
+        // Implement Visual Input when changing weapons (color the slot that is about to be changed)
+    }
+
     public void SelectLastSelectedEquipmentSlot() // go back to last equipment slot after equipping item
     {
         Button lastSelectedButton = null;
 
+        ToggleEquipmentButtons(true);
+
         switch (currentSelectedEquipmentSlot)
         {
             case EquipmentType.RightWeapon01:
-                lastSelectedButton = rightHandSlot01.GetComponentInParent<Button>();
+                lastSelectedButton = rightHandSlot01Button;
                 break;
             case EquipmentType.RightWeapon02:
-                lastSelectedButton = rightHandSlot02.GetComponentInParent<Button>();
+                lastSelectedButton = rightHandSlot02Button;
                 break;
             case EquipmentType.RightWeapon03:
-                lastSelectedButton = rightHandSlot03.GetComponentInParent<Button>();
+                lastSelectedButton = rightHandSlot03Button;
                 break;
             default:
                 break;
@@ -60,6 +88,8 @@ public class PlayerUIEquipmentManager : MonoBehaviour
             lastSelectedButton.Select();
             lastSelectedButton.OnSelect(null);
         }
+
+        equipmentInventoryWindow.SetActive(false);
     }
 
     public void CloseEquipmentMenu()
@@ -119,6 +149,7 @@ public class PlayerUIEquipmentManager : MonoBehaviour
         // {
         //    return;
         // }
+        ToggleEquipmentButtons(false);
 
         equipmentInventoryWindow.SetActive(true);
 
@@ -154,10 +185,12 @@ public class PlayerUIEquipmentManager : MonoBehaviour
             }
         }
 
-        if (weaponsInInventory.Count <= 0)
+        if (weaponsInInventory.Count <= 0) // If no weapon in inventory
         {
-            // equipmentInventoryWindow.SetActive(false); // also valid
+            equipmentInventoryWindow.SetActive(false);
+            ToggleEquipmentButtons(true);
             RefreshMenu();
+            SelectLastSelectedEquipmentSlot();
             return;
         }
 
@@ -186,6 +219,11 @@ public class PlayerUIEquipmentManager : MonoBehaviour
 
     public void UnEquipSelectedItem()
     {
+        if (equipmentInventoryWindow.activeSelf)
+        {
+            return;
+        }
+
         PlayerManager player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerManager>();
 
         Item unequippedItem;

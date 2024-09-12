@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d68f76ff5d2a7e4ca600fbe36749271, type: 2}
+  - {fileID: 2100000, guid: a1854837cd6c6fd40a45e75614d8814b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 1803526482535673542}
   - component: {fileID: 8228186588562261331}
   - component: {fileID: 2743332255132290183}
+  - component: {fileID: 3647703703389871883}
   m_Layer: 0
   m_Name: Dark_Sword_Short
   m_TagString: Untagged
@@ -211,6 +212,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleDuration: 0.1
   targetScale: {x: 1, y: 1, z: 1}
+--- !u!114 &3647703703389871883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7720838897602133769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7aebf19d440d5d4abdb5d21d3172f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDestroyed: 5
 --- !u!1001 &6695062056292340572
 PrefabInstance:
   m_ObjectHideFlags: 0

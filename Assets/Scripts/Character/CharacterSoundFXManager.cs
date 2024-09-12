@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterSoundFXManager : MonoBehaviour
 {
+    private CharacterManager character;
     private AudioSource audioSource;
 
     [Header("Sounds")]
@@ -12,9 +13,11 @@ public class CharacterSoundFXManager : MonoBehaviour
     [SerializeField] protected AudioClip[] footSteps;
     [SerializeField] protected AudioClip[] whooshes;
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        character = GetComponent<CharacterManager>();
     }
 
     public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)
@@ -51,11 +54,16 @@ public class CharacterSoundFXManager : MonoBehaviour
         }
     }
 
-    public void PlayFootStep()
+    public virtual void PlayFootStep()
     {
+        if (!character.characterNetworkManager.isMoving.Value)
+        {
+            return;
+        }
+
         if (footSteps.Length > 0)
         {
-            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(footSteps));
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(footSteps), 1f, true, 0.2f);
         }
     }
     public virtual void PlayWhooshes()

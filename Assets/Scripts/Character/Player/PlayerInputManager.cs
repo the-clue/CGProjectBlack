@@ -184,7 +184,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleRTInput();
         HandleRTChargedInput();
         HandleSwitchWeaponRightInput();
-        HandleSwitchWeaponLeftInput();
+        // HandleSwitchWeaponLeftInput();
         HandleQuedInputs();
         HandleInteractionInput();
         HandleOpenCharacterMenuInput();
@@ -260,8 +260,13 @@ public class PlayerInputManager : MonoBehaviour
         if (dodgeInput)
         {
             dodgeInput = false;
-            // Perform a dodge
 
+            if (PlayerUIManager.instance.menuWindowIsOpen)
+            {
+                return;
+            }
+
+            // Perform a dodge
             player.playerLocomotionManager.AttemptToPerformDodge();
         }
     }
@@ -283,6 +288,11 @@ public class PlayerInputManager : MonoBehaviour
         if (jumpInput)
         {
             jumpInput = false;
+
+            if (PlayerUIManager.instance.menuWindowIsOpen)
+            {
+                return;
+            }
 
             player.playerLocomotionManager.AttemptToPerformJump();
         }
@@ -371,6 +381,11 @@ public class PlayerInputManager : MonoBehaviour
         {
             RB_Input = false;
 
+            if (PlayerUIManager.instance.menuWindowIsOpen)
+            {
+                return;
+            }
+
             player.playerNetworkManager.SetCharacterActionHand(true);
 
             player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.rightHandAction,
@@ -383,6 +398,11 @@ public class PlayerInputManager : MonoBehaviour
         if (RT_Input)
         {
             RT_Input = false;
+
+            if (PlayerUIManager.instance.menuWindowIsOpen)
+            {
+                return;
+            }
 
             player.playerNetworkManager.SetCharacterActionHand(true);
 
@@ -518,6 +538,12 @@ public class PlayerInputManager : MonoBehaviour
         if (openMenuInput)
         {
             openMenuInput = false;
+
+            if (PlayerUIManager.instance.menuWindowIsOpen) // if already open, then close it
+            {
+                PlayerUIManager.instance.CloseAllMenuWindows();
+                return;
+            }
 
             PlayerUIManager.instance.playerUIPopUpManager.CloseAllPopUpWindows();
             PlayerUIManager.instance.CloseAllMenuWindows();

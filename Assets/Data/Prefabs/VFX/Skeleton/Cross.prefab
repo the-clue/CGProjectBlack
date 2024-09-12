@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6587625381173590336}
   - component: {fileID: 7154414109589341054}
   - component: {fileID: 8378465321673753377}
+  - component: {fileID: 5935140040191247295}
   m_Layer: 10
   m_Name: Cross
   m_TagString: Untagged
@@ -152,7 +153,6 @@ MonoBehaviour:
   magicDamage: 0
   poiseDamage: 0
   contactPoint: {x: 0, y: 0, z: 0}
-  rangeMagicIsDestroyable: 0
   rangeMagicHitVFX: {fileID: 2944396702758532163, guid: 6f1d596b169f10c41b12f9bb2d9d5a31,
     type: 3}
   rb: {fileID: 6587625381173590336}
@@ -170,3 +170,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleDuration: 0.3
   targetScale: {x: 1, y: 1, z: 1}
+--- !u!114 &5935140040191247295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627753157766358895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7aebf19d440d5d4abdb5d21d3172f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDestroyed: 10

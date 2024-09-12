@@ -30,11 +30,15 @@ public class FogWallInteractable : Interactable
     {
         base.Interact(player);
 
-        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+        Quaternion targetRotation = transform.localRotation;
+        // Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
         player.transform.rotation = targetRotation;
 
         AllowPlayerThroughFogWallCollidersServerRpc(player.NetworkObjectId);
         player.playerAnimatorManager.PlayTargetActionAnimation("Enter_Fog_01", true);
+
+        AIBossCharacterManager bossToActivate = WorldAIManager.instance.GetBossCharacterByID(fogWallID);
+        bossToActivate.ActivateFight();
     }
 
     public override void OnNetworkSpawn()
@@ -99,7 +103,8 @@ public class FogWallInteractable : Interactable
     private IEnumerator DisableCollisionForTime(PlayerManager player)
     {
         Physics.IgnoreCollision(player.characterController, fogWallCollider, true);
-        yield return new WaitForSeconds(3); // Change this to your walking animation length
+        yield return new WaitForSeconds(1.14f); // Change this to your walking animation length
         Physics.IgnoreCollision(player.characterController, fogWallCollider, false);
+        interactableCollider.enabled = true;
     }
 }

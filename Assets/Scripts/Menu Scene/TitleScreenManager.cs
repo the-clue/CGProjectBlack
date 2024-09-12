@@ -10,10 +10,13 @@ public class TitleScreenManager : MonoBehaviour
 
     [Header("Title Screen Menu")]
     [SerializeField] GameObject titleScreenMainMenu;
-
+    [SerializeField] GameObject titleScreenIntroScene;
+    [SerializeField] Image fader;
+ 
     [Header("Buttons")]
     [SerializeField] Button noCharacterSlotsOkayButton;
     [SerializeField] Button deleteCharacterPopUpConfirmButton;
+    [SerializeField] Button introSceneButton;
 
 
     [Header("Pop Ups")]
@@ -42,6 +45,44 @@ public class TitleScreenManager : MonoBehaviour
     public void StartNewGame()
     {
         WorldSaveGameManager.instance.AttemptToCreateNewGame();
+    }
+
+    public void CheckForFreeCharacterSlots()
+    {
+        WorldSaveGameManager.instance.CheckForFreeCharacterSlots();
+    }
+
+    public void DisplayIntro()
+    {
+        StartCoroutine(FadeToIntro());
+    }
+
+    IEnumerator FadeToIntro()
+    {
+        fader.enabled = true;
+
+        introSceneButton.Select();
+
+        float elapsedTime = 0f;
+        float fadeDuration = 1f;
+
+        // Loop until the specified fade duration has elapsed
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float alphaValue = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+
+            Color newColor = new Color(fader.color.r, fader.color.g, fader.color.b, alphaValue);
+            fader.color = newColor;
+
+            yield return null; // Wait until the next frame
+        }
+
+        fader.color = new Color(fader.color.r, fader.color.g, fader.color.b, 0);
+
+        titleScreenIntroScene.SetActive(true);
+        introSceneButton.Select();
     }
 
     public void DisplayNoFreeCharacterSlotsPopUp()
@@ -74,5 +115,10 @@ public class TitleScreenManager : MonoBehaviour
     public void DeleteCharacterSlot ()
     {
         WorldSaveGameManager.instance.DeleteGame(currentSelectedSlot);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

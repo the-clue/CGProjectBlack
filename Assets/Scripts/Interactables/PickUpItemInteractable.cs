@@ -15,7 +15,7 @@ public class PickUpItemInteractable : Interactable
     [SerializeField] Item item;
 
     [Header("World Spawn Pick Up")]
-    [SerializeField] int itemID;
+    [SerializeField] int worldItemID;
     [SerializeField] bool hasBeenLooted = false;
 
     protected override void Start()
@@ -36,12 +36,12 @@ public class PickUpItemInteractable : Interactable
             return;
         }
 
-        if (!WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.ContainsKey(itemID))
+        if (!WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.ContainsKey(worldItemID))
         {
-            WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.Add(itemID, false);
+            WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.Add(worldItemID, false);
         }
         
-        hasBeenLooted = WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted[itemID];
+        hasBeenLooted = WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted[worldItemID];
 
         if (hasBeenLooted)
         {
@@ -54,24 +54,33 @@ public class PickUpItemInteractable : Interactable
         base.Interact(player);
 
         // Play SFX
-        player.characterSoundFXManager.PlaySoundFX(WorldSoundFXManager.instance.pickUpItemSFX);
+        player.characterSoundFXManager.PlaySoundFX(WorldSoundFXManager.instance.pickUpItemSFX, 2);
 
-        // Add Item to Inventory
-        player.playerInventoryManager.AddItemToInventory(item);
-
+        StatusItem statusItem = item as StatusItem;
+        if (statusItem != null)
+        {
+            player.AddStatusPoints(statusItem.statusType, statusItem.statusPoints);
+        }
+        else
+        {
+            player.playerInventoryManager.AddItemToInventory(item);
+        }
+        
         // Play UI Pop Up
         PlayerUIManager.instance.playerUIPopUpManager.SendItemPopUp(item);
 
         // Save loot status
         if (pickUpType == ItemPickUpType.WorldSpawn)
         {
-            if (WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.ContainsKey(itemID))
+            if (WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.ContainsKey(worldItemID))
             {
-                WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.Remove(itemID);
+                WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.Remove(worldItemID);
             }
             
-            WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.Add(itemID, true);
+            WorldSaveGameManager.instance.currentCharacterData.worldItemsLooted.Add(worldItemID, true);
         }
+
+        WorldSaveGameManager.instance.SaveGameWithoutPosition();
 
         // Hide or destroy game object
         Destroy(gameObject);

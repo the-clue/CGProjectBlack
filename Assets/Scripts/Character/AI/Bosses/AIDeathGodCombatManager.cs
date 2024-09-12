@@ -12,6 +12,7 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
     [SerializeField] ImpactDamageCollider impactDamageCollider;
     [SerializeField] Transform rangeMagicSpawnPoint;
     [SerializeField] Transform flyRangeMagicSpawnPoint;
+    [SerializeField] Transform phaseShiftMagicSpawnPoint;
 
     [Header("Damage")]
     [SerializeField] int baseDamage = 100;
@@ -21,6 +22,7 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
     [SerializeField] float attack03DamageModifier = 1.5f; // Fire for Three
     [SerializeField] float attack04DamageModifier = 2.0f; // Fly then Fire
     [SerializeField] float attack05DamageModifier = 2.25f; // Charge Slash
+    [SerializeField] float attackPSDamageModifier = 4.0f; // Phase Shift Aura
 
     /*
     [SerializeField] float attack06DamageModifier = 2.5f;
@@ -40,6 +42,11 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
     [SerializeField] float attack05RangeMagicSpeed = 15f;
     [SerializeField] float attack05RangeMagicAngleSpeed = 2f;
     [SerializeField] int attack05RangeMagicMode = 1;
+    [SerializeField] float attackPSRangeMagicSpeed = 7.5f;
+    [SerializeField] float attackPSRangeMagicAngleSpeed = 7.5f;
+    [SerializeField] int attackPSRangeMagicMode = 1;
+    [SerializeField] float attackPSRangeMagicDelay = 10;
+    [SerializeField] float attackPSRangeMagicHomingDuration = 10;
 
     [Header("FXs")]
     [SerializeField] GameObject weapon;
@@ -53,6 +60,8 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
     [SerializeField] AudioClip attack04SFX;
     [SerializeField] GameObject attack05VFX;
     [SerializeField] AudioClip attack05SFX;
+    [SerializeField] GameObject attackPSVFX;
+    [SerializeField] AudioClip attackPSSFX;
     [SerializeField] GameObject teleportVFX;
 
     protected override void Awake()
@@ -69,7 +78,7 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
         float impactDamage = baseDamage * attack01DamageModifier;
         float impactPoiseDamage = basePoiseDamage * attack01DamageModifier;
         impactDamageCollider.SetImpactDamageCollider(aiDeathGodManager, impactDamage, impactPoiseDamage,
-            attack01VFX, attack01SFX, attack01ImpactSize, attack01ImpactHeight);
+            attack01VFX, attack01SFX, attack01ImpactSize, attack01ImpactHeight, 53.5f);
     }
 
     public void SetAttack02()
@@ -78,7 +87,7 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
         float impactDamage = baseDamage * attack02DamageModifier;
         float impactPoiseDamage = basePoiseDamage * attack02DamageModifier;
         impactDamageCollider.SetImpactDamageCollider(aiDeathGodManager, impactDamage, impactPoiseDamage,
-            attack02VFX, attack02SFX, attack02ImpactSize, attack02ImpactHeight);
+            attack02VFX, attack02SFX, attack02ImpactSize, attack02ImpactHeight, 53.5f);
     }
     public void SetAttack03()
     {
@@ -134,6 +143,46 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
         aiDeathGodManager.deathGodSoundFXManager.PlaySoundFX(attack05SFX);
     }
 
+    public void CastAttack06()
+    {
+        float magicDamage = baseDamage * attack04DamageModifier;
+        float magicPoiseDamage = basePoiseDamage * attack04DamageModifier;
+        Vector3 eulerRotation = transform.rotation.eulerAngles;
+        eulerRotation.x = 20;
+        Vector3 newPosition = new Vector3(flyRangeMagicSpawnPoint.position.x, flyRangeMagicSpawnPoint.position.y + 1, flyRangeMagicSpawnPoint.position.z);
+        GameObject rangeMagicGameObject = Instantiate(attack04VFX, newPosition, Quaternion.Euler(eulerRotation));
+        RangeMagicDamageCollider rangeMagicDamageCollider = rangeMagicGameObject.GetComponent<RangeMagicDamageCollider>();
+        rangeMagicDamageCollider.SetRangeMagicDamageCollider(aiDeathGodManager, currentTarget, magicDamage, magicPoiseDamage,
+            attack04RangeMagicSpeed, attack04RangeMagicAngleSpeed, attack04RangeMagicMode, 0, attack04RangeMagicAngleSpeed, false);
+        aiDeathGodManager.deathGodSoundFXManager.PlaySoundFX(attack04SFX);
+    }
+
+    public void CastAttack09()
+    {
+        float magicDamage = baseDamage * attack04DamageModifier;
+        float magicPoiseDamage = basePoiseDamage * attack04DamageModifier;
+        GameObject rangeMagicGameObject = Instantiate(attack04VFX, flyRangeMagicSpawnPoint.position, flyRangeMagicSpawnPoint.rotation);
+        RangeMagicDamageCollider rangeMagicDamageCollider = rangeMagicGameObject.GetComponent<RangeMagicDamageCollider>();
+        rangeMagicDamageCollider.SetRangeMagicDamageCollider(aiDeathGodManager, currentTarget, magicDamage, magicPoiseDamage,
+            attack04RangeMagicSpeed, attack04RangeMagicAngleSpeed, attack04RangeMagicMode, 0, attack04RangeMagicAngleSpeed, false);
+        aiDeathGodManager.deathGodSoundFXManager.PlaySoundFX(attack04SFX);
+    }
+
+    public void CastPhaseShiftAttack()
+    {
+        aiCharacter.characterSoundFXManager.PlayAttackGrunt();
+
+        float magicDamage = baseDamage * attackPSDamageModifier;
+        float magicPoiseDamage = basePoiseDamage * attackPSDamageModifier;
+        Vector3 eulerRotation = transform.rotation.eulerAngles;
+        eulerRotation.x = 0; // Set the x axis rotation to 0
+        GameObject rangeMagicGameObject = Instantiate(attackPSVFX, phaseShiftMagicSpawnPoint.position, Quaternion.Euler(eulerRotation));
+        RangeMagicDamageCollider rangeMagicDamageCollider = rangeMagicGameObject.GetComponent<RangeMagicDamageCollider>();
+        rangeMagicDamageCollider.SetRangeMagicDamageCollider(aiDeathGodManager, currentTarget, magicDamage, magicPoiseDamage,
+            attackPSRangeMagicSpeed, attackPSRangeMagicAngleSpeed, attackPSRangeMagicMode, attackPSRangeMagicDelay, attackPSRangeMagicHomingDuration, true);
+        aiDeathGodManager.deathGodSoundFXManager.PlaySoundFX(attackPSSFX);
+    }
+
     public void ActivateImpactAttack()
     {
         impactDamageCollider.ActivateImpact();
@@ -143,14 +192,17 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
     {
         if (distanceFromTarget > 3f)
         {
-            _ = Instantiate(teleportVFX, aiDeathGodManager.transform);
+            _ = Instantiate(teleportVFX, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.LookRotation(transform.up));
+            // _ = Instantiate(teleportVFX, aiDeathGodManager.transform);
 
             Vector3 targetPosition = currentTarget.transform.position;
             Vector3 directionToTarget = (aiDeathGodManager.transform.position - targetPosition).normalized;
             targetPosition += directionToTarget * 1f;
-            targetPosition.y = 0;
+            targetPosition.y = targetPosition.y + 1.5f;
 
             aiDeathGodManager.transform.position = targetPosition;
+
+            _ = Instantiate(teleportVFX, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.LookRotation(transform.up));
         }
     }
 
@@ -168,19 +220,19 @@ public class AIDeathGodCombatManager : AICharacterCombatManager
 
         if (viewableAngle >= 75 && viewableAngle <= 105)
         {
-            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_90", true);
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_90", true, true, true);
         }
         else if (viewableAngle >= 150 && viewableAngle <= 180)
         {
-            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_180", true);
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_180", true, true, true);
         }
         else if (viewableAngle <= -75 && viewableAngle >= -105)
         {
-            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_90", true);
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_90", true, true, true);
         }
         else if (viewableAngle <= -150 && viewableAngle >= -180)
         {
-            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_180", true);
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_180", true, true, true);
         }
     }
 }

@@ -224,7 +224,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7607887533743801642}
+  - {fileID: 8489726895863772503}
   - {fileID: 409320036278285573}
   m_Father: {fileID: 7995988442855012822}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1447,7 +1447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6951318032511183202}
   - component: {fileID: 8072176140587209604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PT_Plague_Doctor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2437,7 +2437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 638299769
+  GlobalObjectIdHash: 1794891553
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -2523,7 +2523,7 @@ MonoBehaviour:
   canDoJumpAttack: 0
   isDoingJumpattack: 0
   actionRecoveryTime: 0
-  enablePivot: 0
+  enablePivot: 1
   distanceFromTarget: 0
   viewableAngle: 0
   targetDirection: {x: 0, y: 0, z: 0}
@@ -2531,18 +2531,18 @@ MonoBehaviour:
   minimumFOV: -45
   maximumFOV: 45
   attackRotationSpeed: 3
-  attack02DamageCollider: {fileID: 4011912402905194030}
+  attack02DamageCollider: {fileID: 4012211077245086120}
   attack05DamageCollider: {fileID: 6321586855626315001}
-  baseDamage: 50
+  baseDamage: 75
   basePoiseDamage: 20
   attack01DamageModifier: 1
   attack02DamageModifier: 1.25
   attack03DamageModifier: 1.5
   attack04DamageModifier: 1.5
-  PhaseShiftDamageModifier: 2
+  PhaseShiftDamageModifier: 4
   attack05DamageModifier: 2.25
   magicBulletSpeed: 30
-  magicBulletRotationSpeed: 10
+  magicBulletRotationSpeed: 15
   magicBulletMode: 1
   magicBulletDelay: 0
   magicBulletHomingDuration: 1
@@ -2551,15 +2551,14 @@ MonoBehaviour:
   magicRangeScytheMode: 2
   magicRangeScytheDelay: 15
   magicRangeScytheHomingDuration: 1
-  magicTeleportDistance: 15
   magicBulletSpawnPoint: {fileID: 1852199872634511653}
-  magicBladeSpawnPoint: {fileID: 7607887533743801642}
+  magicBladeSpawnPoint: {fileID: 0}
   magicAoESlashesSpawnPoint: {fileID: 3058315377306501256}
   magicRangeScytheSpawnPoint: {fileID: 3290738835620082666}
   magicFlameSpawnPoint: {fileID: 2844028316663535372}
   magicBulletPrefab: {fileID: 7720838897602133769, guid: ea5ade442ea54cc4e86b7462114bf0e0,
     type: 3}
-  magicBladePrefab: {fileID: 7607887533743772346}
+  magicBladePrefab: {fileID: 8489726895863997127}
   magicMeteorPrefab: {fileID: 8378648546881499446, guid: f7e433dfb439b7d45bb9ce87c4266508,
     type: 3}
   magicAoESlahesPrefab: {fileID: 689667626583958020, guid: 9954b3daf4dce65428d3ca0c10f869be,
@@ -2760,7 +2759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c488e8385e9d09441bd3fea784dbd92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodSplashVFX: {fileID: 0}
+  bloodSplashVFX: {fileID: 3548588485384254792, guid: fed5939b442c7284daa8ed811f28e1d5,
+    type: 3}
 --- !u!114 &5670666618365266964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3440,7 +3440,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2349469702789304567}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7607887533743681590
+--- !u!1001 &7159649108238124412
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -3448,55 +3448,62 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2187395917166584875}
     m_Modifications:
-    - target: {fileID: 107148, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
-      propertyPath: m_Name
-      value: Dark_Scythe
-      objectReference: {fileID: 0}
-    - target: {fileID: 107148, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.30000004
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.000000012048984
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.49999994
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalRotation.y
       value: -0.000000025087498
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.8660255
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
+    - target: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6789607946626002456, guid: 6ba999f3f47bccf4583bbb53f83c1ce8,
+    - target: {fileID: 1625165389408528315, guid: a6511b2ea6a2b5244944714921e689f9,
+        type: 3}
+      propertyPath: m_Name
+      value: Dark_Scythe_v2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120975019761560788, guid: a6511b2ea6a2b5244944714921e689f9,
         type: 3}
       propertyPath: characterCausingDamage
       value: 
@@ -3505,28 +3512,28 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6ba999f3f47bccf4583bbb53f83c1ce8, type: 3}
---- !u!114 &4011912402905194030 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: a6511b2ea6a2b5244944714921e689f9, type: 3}
+--- !u!114 &4012211077245086120 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6789607946626002456, guid: 6ba999f3f47bccf4583bbb53f83c1ce8,
+  m_CorrespondingSourceObject: {fileID: 6120975019761560788, guid: a6511b2ea6a2b5244944714921e689f9,
     type: 3}
-  m_PrefabInstance: {fileID: 7607887533743681590}
+  m_PrefabInstance: {fileID: 7159649108238124412}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7607887533743772346}
+  m_GameObject: {fileID: 8489726895863997127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eaa02cc8c4a4994c8bd5c7ca73090bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 3592942517c490f48adae50c6a877ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7607887533743772346 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 107148, guid: 6ba999f3f47bccf4583bbb53f83c1ce8,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607887533743681590}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7607887533743801642 stripped
+--- !u!4 &8489726895863772503 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 406812, guid: 6ba999f3f47bccf4583bbb53f83c1ce8,
+  m_CorrespondingSourceObject: {fileID: 1625165389408497707, guid: a6511b2ea6a2b5244944714921e689f9,
     type: 3}
-  m_PrefabInstance: {fileID: 7607887533743681590}
+  m_PrefabInstance: {fileID: 7159649108238124412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8489726895863997127 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1625165389408528315, guid: a6511b2ea6a2b5244944714921e689f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7159649108238124412}
   m_PrefabAsset: {fileID: 0}

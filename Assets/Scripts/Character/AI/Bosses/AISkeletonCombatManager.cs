@@ -182,7 +182,7 @@ public class AISkeletonCombatManager : AICharacterCombatManager
         float impactDamage = baseDamage * attack06DamageModifier;
         float impactPoiseDamage = basePoiseDamage * attack06DamageModifier;
         leftFootStompImpactDamageCollider.SetImpactDamageCollider(aiSkeletonManager, impactDamage, impactPoiseDamage,
-            skeletonImpactVFX, aiSkeletonManager.skeletonSoundFXManager.impactSounds[0], 2.5f, 0.2f);
+            skeletonImpactVFX, aiSkeletonManager.skeletonSoundFXManager.impactSounds[0], 2.5f, 0.2f, 1.5f);
     }
     public void ActivateLeftFootStompImpactAttack()
     {

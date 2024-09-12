@@ -27,7 +27,7 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
     protected override void Start()
     {
         base.Start();
-
+        
         LoadWeaponsOnBothHands();
     }
 
@@ -71,6 +71,37 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
     }
 
     public void SwitchRightWeapon()
+    {
+        if (!player.IsOwner)
+        {
+            return;
+        }
+        if (player.isPerformingAction)
+        {
+            return;
+        }
+
+        player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, false, true, true);
+
+        player.playerInventoryManager.rightHandWeaponIndex += 1;
+
+        // if (player.playerInventoryManager.rightHandWeaponIndex < 0 || player.playerInventoryManager.rightHandWeaponIndex > player.playerInventoryManager.weaponsInRightHandSlots.Length - 1)
+        if (player.playerInventoryManager.rightHandWeaponIndex < 0 || player.playerInventoryManager.rightHandWeaponIndex > 2)
+        {
+            player.playerInventoryManager.rightHandWeaponIndex = 0;
+        }
+
+        WeaponItem selectedWeapon;
+
+        foreach (WeaponItem weapon in player.playerInventoryManager.weaponsInRightHandSlots)
+        {
+            selectedWeapon = player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex];
+
+            player.playerNetworkManager.currentRightHandWeaponID.Value = selectedWeapon.itemID;
+        }
+    }
+
+    public void SwitchRightWeaponOldVersion()
     {
         if (!player.IsOwner)
         {

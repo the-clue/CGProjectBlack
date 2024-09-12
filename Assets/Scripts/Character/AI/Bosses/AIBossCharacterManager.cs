@@ -34,6 +34,8 @@ public class AIBossCharacterManager : AICharacterManager
     {
         base.OnNetworkSpawn();
 
+        navMeshAgent.Warp(transform.position); // for some reason, navmeshagent is created at global origin, so this is needed
+
         bossFightIsActive.OnValueChanged += OnBossFightIsActiveChanged;
         OnBossFightIsActiveChanged(false, bossFightIsActive.Value);
 
@@ -119,7 +121,7 @@ public class AIBossCharacterManager : AICharacterManager
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("GREAT FOE FELLED");
+        PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("");
 
         if (IsOwner)
         {
@@ -221,5 +223,12 @@ public class AIBossCharacterManager : AICharacterManager
         characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
         combatStanceState = Instantiate(secondPhaseCombatStanceState);
         currentState = combatStanceState;
+    }
+
+    public void ActivateFight()
+    {
+        bossFightIsActive.Value = true;
+
+        currentState = idleState;
     }
 }

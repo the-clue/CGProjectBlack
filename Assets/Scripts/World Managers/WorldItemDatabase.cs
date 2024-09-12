@@ -9,6 +9,9 @@ public class WorldItemDatabase : MonoBehaviour
 
     public WeaponItem unarmedWeapon;
 
+    [Header("Status Items")]
+    [SerializeField] List<StatusItem> statusItems = new List<StatusItem>();
+
     [Header("Weapons")]
     [SerializeField] List<WeaponItem> weapons = new List<WeaponItem>();
 
@@ -25,6 +28,11 @@ public class WorldItemDatabase : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        foreach (var statusItem in statusItems)
+        {
+            items.Add(statusItem);
         }
 
         // Add all weapons to list of weapons

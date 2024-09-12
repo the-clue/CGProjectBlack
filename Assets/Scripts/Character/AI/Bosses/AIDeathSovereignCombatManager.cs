@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class AIDeathSovereignCombatManager : AICharacterCombatManager
 {
@@ -10,7 +11,8 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
 
     [Header("Damage Colliders")]
     // [SerializeField] MagicBulletDamageCollider attack01DamageCollider;
-    [SerializeField] MagicDamageCollider attack02DamageCollider;
+    // [SerializeField] MagicDamageCollider attack02DamageCollider;
+    [SerializeField] MeleeDamageMultiCollider attack02DamageCollider;
     // [SerializeField] MagicDamageCollider attack03DamageCollider;
     // [SerializeField] MagicDamageCollider attack04DamageCollider;
     [SerializeField] MagicDamageCollider attack05DamageCollider;
@@ -19,7 +21,7 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
     [SerializeField] int baseDamage = 50;
     [SerializeField] int basePoiseDamage = 20;
     [SerializeField] float attack01DamageModifier = 1.0f; // Magic Bullet
-    [SerializeField] float attack02DamageModifier = 1.5f; // Magic Blade
+    [SerializeField] float attack02DamageModifier = 1.5f; // Scythe
     [SerializeField] float attack03DamageModifier = 1.5f; // Magic Meteor
     [SerializeField] float attack04DamageModifier = 1.5f; // Magic Range Scythe
     [SerializeField] float PhaseShiftDamageModifier = 2.0f; // Magic AoE Slashes
@@ -36,7 +38,8 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
     [SerializeField] int magicRangeScytheMode = 1;
     [SerializeField] float magicRangeScytheDelay = 0f;
     [SerializeField] float magicRangeScytheHomingDuration = 10f;
-    [SerializeField] float magicTeleportDistance = 15f;
+    // [SerializeField] float magicTeleportDistance = 15f;
+    private Collider magicTeleportArea;
 
     [Header("Magic Spawn Points")]
     [SerializeField] Transform magicBulletSpawnPoint;
@@ -59,6 +62,7 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
         base.Awake();
 
         aiDeathSovereignManager = GetComponent<AIDeathSovereignCharacterManager>();
+        magicTeleportArea = GameObject.FindGameObjectWithTag("SovereignTeleportArea").GetComponent<Collider>();
     }
 
     public void CastAttack01() // Magic Dagger Throw
@@ -82,20 +86,18 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
     {
         magicBladePrefab.SetActive(true);
 
-        attack02DamageCollider.magicDamage = baseDamage * attack02DamageModifier;
-        attack02DamageCollider.poiseDamage = basePoiseDamage * attack02DamageModifier;
+        attack02DamageCollider.SetDamage(0, baseDamage * attack02DamageModifier, basePoiseDamage * attack02DamageModifier);
     }
     public void CastAttack02()
     {
         aiCharacter.characterSoundFXManager.PlayAttackGrunt();
         aiCharacter.characterSoundFXManager.PlayWhooshes();
 
-        attack02DamageCollider.EnableDamageCollider();
+        attack02DamageCollider.EnableDamageColliders();
     }
     public void RemoveAttack02()
     {
-        attack02DamageCollider.DisableDamageCollider();
-
+        attack02DamageCollider.DisableDamageColliders();
         // magicBladePrefab.SetActive(false); // Managed by a utility script
     }
 
@@ -177,11 +179,12 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
     public void Teleport()
     {
         _ = Instantiate(magicTeleportPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.LookRotation(transform.up));
-        
+
+        /*
         Vector3 randomDirection = Random.insideUnitSphere * magicTeleportDistance;
         randomDirection += transform.position;
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, magicTeleportDistance, 7);
+        NavMesh.SamplePosition(randomDirection, out hit, magicTeleportDistance, 1);
         Vector3 finalPosition = hit.position;
         transform.position = finalPosition;
 
@@ -189,8 +192,19 @@ public class AIDeathSovereignCombatManager : AICharacterCombatManager
         Vector3 direction = (targetTransform - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = targetRotation;
+        */
 
-        _ = Instantiate(magicTeleportPrefab, new Vector3(finalPosition.x, finalPosition.y + 1, finalPosition.z), Quaternion.LookRotation(transform.up));
+        Bounds bounds = magicTeleportArea.bounds;
+        float x = Random.Range(bounds.min.x, bounds.max.x);
+        float z = Random.Range(bounds.min.z, bounds.max.z);
+        transform.position = new Vector3(x, transform.position.y, z);
+
+        Vector3 direction = aiDeathSovereignManager.characterCombatManager.currentTarget.transform.position - transform.position;
+        direction.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation;
+
+        _ = Instantiate(magicTeleportPrefab, new Vector3(x, transform.position.y + 1, z), Quaternion.LookRotation(transform.up));
         // aiDeathGodManager.navMeshAgent.Warp(finalPosition); // not needed apparently
     }
 

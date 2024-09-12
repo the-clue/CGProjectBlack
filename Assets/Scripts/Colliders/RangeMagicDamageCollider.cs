@@ -1,11 +1,4 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
 
 public class RangeMagicDamageCollider : DamageCollider
 {
@@ -19,7 +12,7 @@ public class RangeMagicDamageCollider : DamageCollider
     private int rangeMagicMode; // 0 -> straight, 1 -> planar-homing, 2 -> homing
     private float rangeMagicHomingDuration;
 
-    // [SerializeField] bool rangeMagicIsDestroyable = true;
+    [SerializeField] bool rangeMagicIsDestroyable = true;
     [SerializeField] GameObject rangeMagicHitVFX;
 
     [SerializeField] private Rigidbody rb;
@@ -40,9 +33,8 @@ public class RangeMagicDamageCollider : DamageCollider
 
     protected override void OnTriggerEnter(Collider other)
     {
-        // For now, every projectile is destroyable (ex. a sword can destroy a projectile)
-        // Remove this comment and the one on the global variable if you want some projectiles to be non-destroyable
-        // if (other.gameObject.layer == 10 && !rangeMagicIsDestroyable) { return; }
+        // This makes it possible for some projectiles to be undestructible (a sword can't destroy a projectile if false)
+        if (other.gameObject.layer == 10 && !rangeMagicIsDestroyable) { return; }
 
         // If the gameObject comes into contact with another collider which isn't a damage collider
         if (other.gameObject.layer != 10) // layer 10 is damage collider (ex. swords or other projectiles)
@@ -115,7 +107,7 @@ public class RangeMagicDamageCollider : DamageCollider
         if (rangeMagicDelay > 0)
         {
             Vector3 targetTransform = characterTarget.transform.position;
-            targetTransform.y = 1.5f; // this makes it get the probable height of the target
+            targetTransform.y = targetTransform.y + 1.5f; // this makes it get the probable height of the target
             Vector3 direction = (targetTransform - transform.position).normalized;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -139,7 +131,7 @@ public class RangeMagicDamageCollider : DamageCollider
             else
             {
                 Vector3 targetTransform = characterTarget.transform.position;
-                targetTransform.y = 1.5f; // this makes it get the probable center of the target
+                targetTransform.y = targetTransform.y + 1.5f; // this makes it get the probable center of the target
                 Vector3 direction = (targetTransform - transform.position).normalized;
                 float rotateAmount = transform.InverseTransformDirection(Vector3.Cross(direction, transform.up)).z;
 
@@ -189,7 +181,7 @@ public class RangeMagicDamageCollider : DamageCollider
         if (rangeMagicPointTargetAtStart)
         {
             Vector3 targetTransform = characterTarget.transform.position;
-            targetTransform.y = 1.5f;
+            targetTransform.y = targetTransform.y + 1.5f;
             Vector3 direction = (targetTransform - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = targetRotation;

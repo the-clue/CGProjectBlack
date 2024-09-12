@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98344573c86a7174389d27d14a55e3f8, type: 3}
+  m_Name: 05_Boss Weapon - Sovereign
+  m_EditorClassIdentifier: 
+  itemName: Sovereign's Dagger
+  itemIcon: {fileID: 21300000, guid: cdccc8c3eee144a4c8d0601762b7836a, type: 3}
+  itemDescription: 
+  itemID: 7
+  weaponAnimator: {fileID: 22100000, guid: a0279560df6c8d9488be62bc02020666, type: 2}
+  weaponModel: {fileID: 283151835078167058, guid: e1acb8ae8bace234b88cf7c32a568622,
+    type: 3}
+  physicalDamage: 30
+  magicalDamage: 0
+  poiseDamage: 8
+  light_Attack_01_Modifier: 0.8
+  light_Attack_02_Modifier: 1
+  light_Attack_03_Modifier: 1.3
+  running_Attack_01_Modifier: 1.3
+  dodge_Attack_01_Modifier: 1.5
+  duck_Attack_01_Modifier: 1.2
+  jump_Attack_01_Modifier: 1.2
+  heavy_Attack_01_Modifier: 1.5
+  heavy_Charged_Attack_01_Modifier: 2.5
+  heavy_Running_Attack_01_Modifier: 2.5
+  heavy_Jump_Attack_01_Modifier: 2.5
+  baseStaminaCost: 10
+  lightAttackStaminaCostMultiplier: 1
+  runningAttackStaminaCostMultiplier: 1.5
+  dodgeAttackStaminaCostMultiplier: 1.2
+  duckAttackStaminaCostMultiplier: 0.8
+  jumpAttackStaminaCostMultiplier: 1
+  heavyAttackStaminaCostMultiplier: 1.5
+  heavyChargedAttackStaminaCostMultiplier: 2
+  heavyRunningAttackStaminaCostMultiplier: 2
+  heavyJumpAttackStaminaCostMultiplier: 2
+  rightHandAction: {fileID: 11400000, guid: be77e16454e2a794d8d4e1b1f89999b3, type: 2}
+  rightHandHeavyAction: {fileID: 11400000, guid: 3afa548db4002114b87d8d8befc1ab3a,
+    type: 2}
+  swingSounds:
+  - {fileID: 8300000, guid: ab38c8f953789430691b634dd685119b, type: 3}
+  - {fileID: 8300000, guid: 7cbfafc671f0e4426a71d276a8bb71ec, type: 3}

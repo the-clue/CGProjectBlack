@@ -32,4 +32,9 @@ public class PlayerUICharacterMenuManager : MonoBehaviour
         PlayerUIManager.instance.menuWindowIsOpen = false;
         menu.SetActive(false);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

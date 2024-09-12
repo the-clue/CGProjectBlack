@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3523709750
+  GlobalObjectIdHash: 1291223935
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
   - {fileID: 7772417941424830557}
   fogWallCollider: {fileID: 3458521452708633505}
   fogWallID: 0
-  fogWallSFX: {fileID: 8300000, guid: b4091e868f38f474a9e2f6462c1218de, type: 3}
+  fogWallSFX: {fileID: 8300000, guid: eec2faa7c0a9042f3bded3aad046b348, type: 3}
   isActive:
     m_InternalValue: 0
 --- !u!54 &4544517150615027047

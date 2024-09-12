@@ -113,6 +113,7 @@ public class WorldSaveGameManager : MonoBehaviour
         return fileName;
     }
 
+    // To refactor to remove unnecessary code
     public void AttemptToCreateNewGame()
     {
         saveFileCreator = new SaveFileCreator();
@@ -213,12 +214,93 @@ public class WorldSaveGameManager : MonoBehaviour
         TitleScreenManager.instance.DisplayNoFreeCharacterSlotsPopUp();
     }
 
+    public void CheckForFreeCharacterSlots()
+    {
+        saveFileCreator = new SaveFileCreator();
+        saveFileCreator.saveFileDirectoryPath = Application.persistentDataPath;
+
+        // Check to see if we can create a new save file
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_01);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_02);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_03);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_04);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_05);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_06);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_07);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_08);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_09);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        saveFileCreator.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_10);
+        if (!saveFileCreator.CheckIfFileExists())
+        {
+            TitleScreenManager.instance.DisplayIntro();
+            return;
+        }
+
+        // If there are no slots, notify player
+        TitleScreenManager.instance.DisplayNoFreeCharacterSlotsPopUp();
+    }
+
     private void NewGame()
     {
         player.playerNetworkManager.vitality.Value = 10;
         player.playerNetworkManager.endurance.Value = 10;
 
         SaveGame();
+
         LoadWorldScene(worldSceneIndex);
     }
 
@@ -231,6 +313,19 @@ public class WorldSaveGameManager : MonoBehaviour
         saveFileCreator.saveFileName = saveFileName;
 
         player.SaveGameDataFromCurrentCharacterData(ref currentCharacterData);
+
+        saveFileCreator.CreateNewCharacterSaveFile(currentCharacterData);
+    }
+
+    public void SaveGameWithoutPosition()
+    {
+        saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(currentCharacterSlotBeingUsed);
+
+        saveFileCreator = new SaveFileCreator();
+        saveFileCreator.saveFileDirectoryPath = Application.persistentDataPath;
+        saveFileCreator.saveFileName = saveFileName;
+
+        player.SaveGameDataFromCurrentCharacterDataWithoutPosition(ref currentCharacterData);
 
         saveFileCreator.CreateNewCharacterSaveFile(currentCharacterData);
     }

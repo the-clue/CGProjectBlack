@@ -63,20 +63,23 @@ public class PlayerUIPopUpManager : MonoBehaviour
     {
         youDiedPopUpGameObject.SetActive(true);
         youDiedPopUpBackGroundText.characterSpacing = 0;
-        StartCoroutine(StretchPopUpTextOverTime(youDiedPopUpBackGroundText, 8, 20));
-        StartCoroutine(FadeInPopUpOverTime(youDiedPopUpCanvasGroup, 5));
-        StartCoroutine(WaitThenFadePopUpOverTime(youDiedPopUpCanvasGroup, 2, 5));
+        StartCoroutine(StretchPopUpTextOverTime(youDiedPopUpBackGroundText, 3, 2));
+        StartCoroutine(FadeInPopUpOverTime(youDiedPopUpCanvasGroup, 1.5f));
+        StartCoroutine(WaitThenFadePopUpOverTime(youDiedPopUpCanvasGroup, 3.5f, 1.5f));
     }
 
     public void SendBossDefeatedPopUp(string bossDefeatedMessage)
     {
-        bossDefeatedPopUpText.text = bossDefeatedMessage;
-        bossDefeatedPopUpBackGroundText.text = bossDefeatedMessage;
+        if (bossDefeatedMessage != "")
+        {
+            bossDefeatedPopUpText.text = bossDefeatedMessage;
+            bossDefeatedPopUpBackGroundText.text = bossDefeatedMessage;
+        }
         bossDefeatedPopUpGameObject.SetActive(true);
         bossDefeatedPopUpBackGroundText.characterSpacing = 0;
-        StartCoroutine(StretchPopUpTextOverTime(bossDefeatedPopUpBackGroundText, 8, 20));
-        StartCoroutine(FadeInPopUpOverTime(bossDefeatedPopUpCanvasGroup, 5));
-        StartCoroutine(WaitThenFadePopUpOverTime(bossDefeatedPopUpCanvasGroup, 2, 5));
+        StartCoroutine(StretchPopUpTextOverTime(bossDefeatedPopUpBackGroundText, 5, 2));
+        StartCoroutine(FadeInPopUpOverTime(bossDefeatedPopUpCanvasGroup, 1.5f));
+        StartCoroutine(WaitThenFadePopUpOverTime(bossDefeatedPopUpCanvasGroup, 5.5f, 1.5f));
     }
 
     public void SendGeneralPopUp(string message)
@@ -85,9 +88,9 @@ public class PlayerUIPopUpManager : MonoBehaviour
         generalPopUpBackGroundText.text = message;
         generalPopUpGameObject.SetActive(true);
         generalPopUpBackGroundText.characterSpacing = 0;
-        StartCoroutine(StretchPopUpTextOverTime(generalPopUpBackGroundText, 8, 20));
-        StartCoroutine(FadeInPopUpOverTime(generalPopUpCanvasGroup, 5));
-        StartCoroutine(WaitThenFadePopUpOverTime(generalPopUpCanvasGroup, 2, 5));
+        StartCoroutine(StretchPopUpTextOverTime(generalPopUpBackGroundText, 3, 2));
+        StartCoroutine(FadeInPopUpOverTime(generalPopUpCanvasGroup, 1.5f));
+        StartCoroutine(WaitThenFadePopUpOverTime(generalPopUpCanvasGroup, 3.5f, 1.5f));
     }
 
     private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount)
@@ -123,7 +126,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
             while(timer < duration)
             {
                 timer += Time.deltaTime;
-                canvas.alpha = Mathf.Lerp(canvas.alpha, 1, duration * Time.deltaTime);
+                canvas.alpha = Mathf.Lerp(0, 1, timer / duration);
 
                 yield return null;
             }
@@ -133,7 +136,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator WaitThenFadePopUpOverTime(CanvasGroup canvas, float duration, float delay)
+    private IEnumerator WaitThenFadePopUpOverTime(CanvasGroup canvas, float delay, float duration)
     {
         if (duration > 0)
         {
@@ -152,7 +155,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
             while (timer < duration)
             {
                 timer += Time.deltaTime;
-                canvas.alpha = Mathf.Lerp(canvas.alpha, 1, duration * Time.deltaTime);
+                canvas.alpha = Mathf.Lerp(1, 0, timer / duration);
 
                 yield return null;
             }

@@ -797,7 +797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6612790905688877951}
   - component: {fileID: 3548020751586442360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PT_Male_Skeleton_01_upper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,7 +976,7 @@ Transform:
   m_GameObject: {fileID: 2578687913870727591}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0, z: 0}
+  m_LocalPosition: {x: -0.1, y: 0.065, z: 0.006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1508,7 +1508,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: -1
   Loop: 0
@@ -2012,7 +2012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5438272723168257036}
   - component: {fileID: 7720325159512307024}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Navmesh Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3908,7 +3908,7 @@ GameObject:
   m_Component:
   - component: {fileID: 633385407587687480}
   - component: {fileID: 8280792565463743238}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PT_Male_Skeleton_01_lower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4341,7 +4341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5195765123355993591}
   - component: {fileID: 7885852932336973041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PT_Male_Skeleton_01_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

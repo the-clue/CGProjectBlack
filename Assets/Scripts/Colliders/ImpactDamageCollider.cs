@@ -13,7 +13,7 @@ public class ImpactDamageCollider : DamageCollider
     private AudioClip impactSFX;
     private float colliderSize;
     private float colliderHeight;
-    private bool onGround;
+    private float groundY;
 
     protected override void Awake()
     {
@@ -22,7 +22,7 @@ public class ImpactDamageCollider : DamageCollider
 
     // Function that sets every variable of the impact damage collider
     public void SetImpactDamageCollider(CharacterManager characterCausingDamage, float impactDamage, float impactPoiseDamage,
-        GameObject impactVFX, AudioClip impactSFX, float colliderSize, float colliderHeight, bool onGround = true)
+        GameObject impactVFX, AudioClip impactSFX, float colliderSize, float colliderHeight, float groundY = -1000)
     {
         this.characterCausingDamage = characterCausingDamage;
         this.impactDamage = impactDamage;
@@ -31,16 +31,17 @@ public class ImpactDamageCollider : DamageCollider
         this.impactSFX = impactSFX;
         this.colliderSize = colliderSize;
         this.colliderHeight = colliderHeight;
-        this.onGround = onGround;
+        this.groundY = groundY;
     }
 
     // Function that creates two box damage colliders forming a Star of David
     public void ActivateImpact()
     {
         Vector3 position = transform.position;
-        if (onGround) // then consider transform.position in y = 0.5 which is ground level
+        if (groundY != -1000) // then consider the given ground level so that the impact happens on the ground
         {
-            position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+            float adjustedHeight = groundY;
+            position = new Vector3(transform.position.x, adjustedHeight, transform.position.z);
         }
 
         if (impactVFX != null)

@@ -463,7 +463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3507067962596612239}
   - component: {fileID: 6234472752166274849}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8257928079569425312, guid: b45a7eecb9d8a6a4188438e44bd20963, type: 3}
+  - {fileID: 2100000, guid: 47d151df11fa9d24e880612d5251a9a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2400,6 +2400,7 @@ GameObject:
   - component: {fileID: 985759056444008046}
   - component: {fileID: 8346542624022020154}
   - component: {fileID: 8237372499308624047}
+  - component: {fileID: 8114429076817132682}
   m_Layer: 6
   m_Name: Player Immortal
   m_TagString: Untagged
@@ -2533,13 +2534,12 @@ MonoBehaviour:
   walkingSpeed: 1.5
   runningSpeed: 3.5
   sprintingSpeed: 5
-  rotationSpeed: 15
+  rotationSpeed: 30
   sprintingStaminaCost: 8
   dodgeStaminaCost: 25
   duckStaminaCost: 10
-  dodgeDistance: 5
   jumpStaminaCost: 15
-  jumpHeight: 1.5
+  jumpHeight: 1.6
 --- !u!114 &-8072230263457738601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2558,6 +2558,8 @@ MonoBehaviour:
   poiseResetTimer: 0
   staminaRegenAmount: 2
   staminaRegenDelay: 0.5
+  healthRegenAmount: 1
+  healthRegenDelay: 2
 --- !u!114 &2577377627753116449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2576,7 +2578,7 @@ MonoBehaviour:
   weaponsInRightHandSlots:
   - {fileID: 11400000, guid: e901b2690a60c9b4ba4b914a8ed4132d, type: 2}
   - {fileID: 11400000, guid: e901b2690a60c9b4ba4b914a8ed4132d, type: 2}
-  - {fileID: 11400000, guid: 4ec72233517793f4a9506bb63b292c4d, type: 2}
+  - {fileID: 11400000, guid: e901b2690a60c9b4ba4b914a8ed4132d, type: 2}
   rightHandWeaponIndex: 0
   weaponsInLeftHandSlots:
   - {fileID: 0}
@@ -2799,7 +2801,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2718e7cb19f64e646a58ec35a3cc87d1, type: 3}
   - {fileID: 8300000, guid: ac07e279d999df94395b45f535ad851f, type: 3}
   - {fileID: 8300000, guid: 52f285891b751c34285d90db9f29e295, type: 3}
-  footSteps: []
+  footSteps:
+  - {fileID: 8300000, guid: ab66dccbdeb63b5449db73ad92f21711, type: 3}
+  - {fileID: 8300000, guid: b2d0936410eda534bb65c5f1794cb663, type: 3}
+  - {fileID: 8300000, guid: d2b2858ce5c7ca9428bfd0e424d5a82d, type: 3}
+  - {fileID: 8300000, guid: 644dc4517bc1c9c40bf1e80d0b048f5b, type: 3}
   whooshes: []
 --- !u!114 &-1144587820937155854
 MonoBehaviour:
@@ -2813,7 +2819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a702d74c0e01c4d81f2e2ba5211000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodSplashVFX: {fileID: 0}
+  bloodSplashVFX: {fileID: 3548588485384254792, guid: fed5939b442c7284daa8ed811f28e1d5,
+    type: 3}
   effectToTest: {fileID: 11400000, guid: 826df089773025f44b87156dc08c0c22, type: 2}
   processEffect: 0
 --- !u!114 &8875272820441271471
@@ -2864,7 +2871,7 @@ CharacterController:
   m_Height: 1.78
   m_Radius: 0.25
   m_SlopeLimit: 45
-  m_StepOffset: 0
+  m_StepOffset: 0.25
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.95, z: 0}
@@ -2879,7 +2886,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2888,7 +2895,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.61850595
+  MinDistance: 4
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -2991,6 +2998,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8114429076817132682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7793800534192163573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111ef61b7be484140b90e03e68c60461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoDetectFootSteps: 1
+  <animator>k__BackingField: {fileID: 7793800534184917129}
+  <minTimeBetweenFootsteps>k__BackingField: 0.2
+  <heightToMarkOffGround>k__BackingField: 0.02
+  <heightToMarkOnGround>k__BackingField: 0.01
+  <surfaceTypes>k__BackingField: []
+  OnLeftFootStep:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRightFootStep:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFootStep:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5402129085493936772}
+        m_TargetAssemblyTypeName: CharacterSoundFXManager, Assembly-CSharp
+        m_MethodName: PlayFootStep
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7910815853901719011
 GameObject:
   m_ObjectHideFlags: 0

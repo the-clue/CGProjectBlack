@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using static UnityEditor.Progress;
 
 public class PlayerManager : CharacterManager
 {
@@ -18,6 +19,8 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerInteractionManager playerInteractionManager;
+
+    private bool isRespawning = false;
 
     protected override void Awake()
     {
@@ -45,10 +48,22 @@ public class PlayerManager : CharacterManager
             return;
         }
 
+        if (isDead.Value) // If character is dead, no more movement nor regen
+        {
+            if (!isRespawning)
+            {
+                isRespawning = true;
+                StartCoroutine(Respawn());
+            }
+
+            return;
+        }
+
         // Handle movement
         playerLocomotionManager.HandleAllMovement();
 
-        // Regen stamina
+        // Regen
+        playerStatsManager.RegenerateHealth();
         playerStatsManager.RegenerateStamina();
 
         DebugMenu();
@@ -93,6 +108,7 @@ public class PlayerManager : CharacterManager
 
             playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
+            playerNetworkManager.currentHealth.OnValueChanged += playerStatsManager.ResetHealthRegenTimer;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
         }
 
@@ -205,18 +221,68 @@ public class PlayerManager : CharacterManager
 
     public void SaveGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
     {
+        // Location Saving
         currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
         currentCharacterData.xPosition = transform.position.x;
         currentCharacterData.yPosition = transform.position.y;
         currentCharacterData.zPosition = transform.position.z;
 
+        // Status Saving
+        currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
         currentCharacterData.currentHealth = playerNetworkManager.currentHealth.Value;
         currentCharacterData.currentStamina = playerNetworkManager.currentStamina.Value;
-
         currentCharacterData.vitality = playerNetworkManager.vitality.Value;
         currentCharacterData.endurance = playerNetworkManager.endurance.Value;
+
+        // Inventory Saving
+        currentCharacterData.itemsInInventory.Clear();
+        foreach (Item item in playerInventoryManager.itemsInInventory)
+        {
+            if (currentCharacterData.itemsInInventory.ContainsKey(item.itemID))
+            {
+                currentCharacterData.itemsInInventory[item.itemID] += 1;
+            }
+            else
+            {
+                currentCharacterData.itemsInInventory[item.itemID] = 1;
+            }
+        }
+
+        // Equipment Saving
+        for (int i = 0; i < playerInventoryManager.weaponsInRightHandSlots.Length; i++)
+        {
+            currentCharacterData.weaponsInWeaponSlots[i] = playerInventoryManager.weaponsInRightHandSlots[i].itemID;
+        }
+    }
+
+    public void SaveGameDataFromCurrentCharacterDataWithoutPosition(ref CharacterSaveData currentCharacterData)
+    {
+        // Status Saving
+        currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
+        currentCharacterData.currentHealth = playerNetworkManager.currentHealth.Value;
+        currentCharacterData.currentStamina = playerNetworkManager.currentStamina.Value;
+        currentCharacterData.vitality = playerNetworkManager.vitality.Value;
+        currentCharacterData.endurance = playerNetworkManager.endurance.Value;
+
+        // Inventory Saving
+        currentCharacterData.itemsInInventory.Clear();
+        foreach (Item item in playerInventoryManager.itemsInInventory)
+        {
+            if (currentCharacterData.itemsInInventory.ContainsKey(item.itemID))
+            {
+                currentCharacterData.itemsInInventory[item.itemID] += 1;
+            }
+            else
+            {
+                currentCharacterData.itemsInInventory[item.itemID] = 1;
+            }
+        }
+
+        // Equipment Saving
+        for (int i = 0; i < playerInventoryManager.weaponsInRightHandSlots.Length; i++)
+        {
+            currentCharacterData.weaponsInWeaponSlots[i] = playerInventoryManager.weaponsInRightHandSlots[i].itemID;
+        }
     }
 
     public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
@@ -238,6 +304,49 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
         playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(0, currentCharacterData.currentStamina);
+
+        // Inventory Loading
+        foreach (var entry in currentCharacterData.itemsInInventory)
+        {
+            int itemID = entry.Key;
+            int quantity = entry.Value;
+
+            for (int i = 0; i < quantity; i++)
+            {
+                Item item = WorldItemDatabase.instance.GetWeaponByID(itemID);
+                playerInventoryManager.AddItemToInventory(item);
+            }
+        }
+
+        // Equipment Loading
+        for (int i = 0; i < playerInventoryManager.weaponsInRightHandSlots.Length; i++)
+        {
+            playerInventoryManager.weaponsInRightHandSlots[i] = WorldItemDatabase.instance.GetWeaponByID(currentCharacterData.weaponsInWeaponSlots[i]);
+            
+            // to load first weapon, can also implement precise slot position in the future
+            playerNetworkManager.currentRightHandWeaponID.Value = playerInventoryManager.weaponsInRightHandSlots[0].itemID;
+        }
+    }
+
+    public void LightlyLoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+    {
+        playerNetworkManager.characterName.Value = currentCharacterData.characterName;
+        Vector3 myPosition = new Vector3(currentCharacterData.xPosition, currentCharacterData.yPosition,
+            currentCharacterData.zPosition);
+        transform.position = myPosition;
+
+        playerNetworkManager.vitality.Value = currentCharacterData.vitality;
+        playerNetworkManager.endurance.Value = currentCharacterData.endurance;
+
+        playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerNetworkManager.vitality.Value);
+        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
+        playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
+        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(0, playerNetworkManager.currentHealth.Value);
+
+        playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
+        playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+        PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(0, playerNetworkManager.currentStamina.Value);
     }
 
     public void LoadOtherPlayerWhenJoiningServer()
@@ -249,6 +358,37 @@ public class PlayerManager : CharacterManager
         if (playerNetworkManager.isLockedOn.Value)
         {
             playerNetworkManager.OnLockOnTargetIDChange(0, playerNetworkManager.currentTargetNetworkID.Value);
+        }
+    }
+
+    IEnumerator Respawn()
+    {
+        int respawnDelay = 3; // can be put global
+
+        yield return new WaitForSeconds(respawnDelay);
+
+        playerNetworkManager.isLockedOn.Value = false;
+        WorldAIManager.instance.ResetAllCharacters();
+        ReviveCharacter();
+
+        LightlyLoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
+
+        isRespawning = false;
+    }
+
+    public void AddStatusPoints(int statusType, int statusPoints)
+    {
+        if (statusType == 0)
+        {
+            playerNetworkManager.vitality.Value += statusPoints;
+        }
+        else if (statusType == 1)
+        {
+            playerNetworkManager.endurance.Value += statusPoints;
+        }
+        else
+        {
+            Debug.Log("Status <" + statusType + "> does not exist!");
         }
     }
 

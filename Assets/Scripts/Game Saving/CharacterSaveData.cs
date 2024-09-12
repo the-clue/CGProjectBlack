@@ -36,11 +36,19 @@ public class CharacterSaveData
     [Header("World Items")]
     public SerializableDictionary<int, bool> worldItemsLooted; // where int is the item ID, bool is the looted status
 
+    [Header("Inventory")]
+    public SerializableDictionary<int, int> itemsInInventory; // where the first int is the item ID, the second int is the quantity
+
+    [Header("Equipment")]
+    public SerializableDictionary<int, int> weaponsInWeaponSlots; // where the first int is the slot position, the second int is the item ID
+
     public CharacterSaveData()
     {
         respawnPoints = new SerializableDictionary<int, bool>();
         bossesAwakened = new SerializableDictionary<int, bool>();
         bossesDefeated = new SerializableDictionary<int, bool>();
         worldItemsLooted = new SerializableDictionary<int, bool>();
+        itemsInInventory = new SerializableDictionary<int, int>();
+        weaponsInWeaponSlots = new SerializableDictionary<int, int>();
     }
 }

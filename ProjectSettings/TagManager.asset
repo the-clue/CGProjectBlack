@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SovereignTeleportArea
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - UI
   - Character
   - Damageable Character
-  - 
+  - Area
   - 
   - Damage Collider
   - Event Trigger
