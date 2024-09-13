@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
-using static UnityEditor.Progress;
 
 public class PlayerManager : CharacterManager
 {

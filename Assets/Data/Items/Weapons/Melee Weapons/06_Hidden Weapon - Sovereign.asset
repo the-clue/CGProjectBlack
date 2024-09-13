@@ -33,7 +33,7 @@ MonoBehaviour:
   heavy_Charged_Attack_01_Modifier: 3
   heavy_Running_Attack_01_Modifier: 2.5
   heavy_Jump_Attack_01_Modifier: 2
-  baseStaminaCost: 20
+  baseStaminaCost: 18
   lightAttackStaminaCostMultiplier: 1
   runningAttackStaminaCostMultiplier: 1.2
   dodgeAttackStaminaCostMultiplier: 1.2
@@ -47,4 +47,5 @@ MonoBehaviour:
   rightHandHeavyAction: {fileID: 11400000, guid: 3afa548db4002114b87d8d8befc1ab3a,
     type: 2}
   swingSounds:
-  - {fileID: 8300000, guid: abf4caad1f5a24e49a317937ebf12163, type: 3}
+  - {fileID: 8300000, guid: bf286d2a64f11a44aa91719a7a0ee7d0, type: 3}
+  - {fileID: 8300000, guid: 0e0e2a8327f57264499f6a0b5e6a1835, type: 3}

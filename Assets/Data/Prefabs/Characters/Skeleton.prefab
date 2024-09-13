@@ -1165,7 +1165,7 @@ MonoBehaviour:
   characterUIManager: {fileID: 0}
   characterGroup: 1
   isPerformingAction: 0
-  characterName: Necrossar, Warden of the Dead
+  characterName: Warden of the Dead
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}

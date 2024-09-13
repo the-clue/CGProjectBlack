@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 625245702
+  GlobalObjectIdHash: 2656978418
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -835,7 +835,7 @@ MonoBehaviour:
   characterUIManager: {fileID: 0}
   characterGroup: 1
   isPerformingAction: 0
-  characterName: Death God
+  characterName: Deity of Death
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}

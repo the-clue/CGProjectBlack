@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8046634586492343306
+--- !u!114 &-7060015302010346625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e953fa49fe9284ab7072e208c8c6ce, type: 3}
   m_Name: ScreenSpaceOutlines
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   renderPassEvent: 350
   outlinesLayerMask:
     serializedVersion: 2
@@ -32,46 +32,6 @@ MonoBehaviour:
     perObjectData: 0
     enableDynamicBatching: 0
     enableInstancing: 0
---- !u!114 &-7713058674062373457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: Outline
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 600
-  fetchColorBuffer: 1
-  requirements: 0
-  passMaterial: {fileID: 2100000, guid: a0de984585e6ad9428bf269639ceb72a, type: 2}
-  passIndex: 0
-  bindDepthStencilAttachment: 0
-  m_Version: 1
---- !u!114 &-5998790232544921078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: DitherEffect
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 600
-  fetchColorBuffer: 1
-  requirements: 0
-  passMaterial: {fileID: 2100000, guid: 4845db6f2818c4247a770bf55a0ded1b, type: 2}
-  passIndex: 0
-  bindDepthStencilAttachment: 0
-  m_Version: 1
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,12 +85,9 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
-  - {fileID: -7713058674062373457}
-  - {fileID: -8046634586492343306}
-  - {fileID: -5998790232544921078}
-  - {fileID: 4374396218871150226}
-  - {fileID: 8342601956180912593}
-  m_RendererFeatureMap: adc0de57c6d2eee5af4dc46000b6f594f66bc0fa799c54900aba13031104c0ac9276a03c2ffab43cd169a43447e0c673
+  - {fileID: -7060015302010346625}
+  - {fileID: 5639221899973043544}
+  m_RendererFeatureMap: adc0de57c6d2eee57fe3d9067dc9059e58257fad708a424e
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 0}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -173,53 +130,7 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &4374396218871150226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052a0051f28380a49905d797cf6fd45d, type: 3}
-  m_Name: MKToonPerObjectOutlines
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    passTag: MKToonPerObjectOutlines
-    Event: 300
-    filterSettings:
-      RenderQueueType: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 4294967295
-      PassNames:
-      - MKToonOutline
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &8342601956180912593
+--- !u!114 &5639221899973043544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

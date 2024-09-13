@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98344573c86a7174389d27d14a55e3f8, type: 3}
   m_Name: 03_Boss Weapon - Skeleton
   m_EditorClassIdentifier: 
-  itemName: Guardian's Cross
+  itemName: Warden's Cross
   itemIcon: {fileID: 21300000, guid: 47f7f23435085d0418b70d500303a1bb, type: 3}
   itemDescription: 
   itemID: 5
@@ -33,7 +33,7 @@ MonoBehaviour:
   heavy_Charged_Attack_01_Modifier: 3.5
   heavy_Running_Attack_01_Modifier: 2
   heavy_Jump_Attack_01_Modifier: 2
-  baseStaminaCost: 30
+  baseStaminaCost: 25
   lightAttackStaminaCostMultiplier: 1
   runningAttackStaminaCostMultiplier: 1.4
   dodgeAttackStaminaCostMultiplier: 1.4

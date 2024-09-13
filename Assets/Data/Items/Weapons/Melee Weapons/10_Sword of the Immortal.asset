@@ -19,7 +19,7 @@ MonoBehaviour:
   weaponAnimator: {fileID: 22100000, guid: 5e83ce8a3edfba54b9fd2dd101072ca2, type: 2}
   weaponModel: {fileID: 283151835078167058, guid: 7f9265c88c1fffa45a3e7064e92899d7,
     type: 3}
-  physicalDamage: 500
+  physicalDamage: 250
   magicalDamage: 0
   poiseDamage: 100
   light_Attack_01_Modifier: 1
