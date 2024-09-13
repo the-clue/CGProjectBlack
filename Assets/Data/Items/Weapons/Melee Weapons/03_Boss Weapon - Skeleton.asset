@@ -47,4 +47,4 @@ MonoBehaviour:
   rightHandHeavyAction: {fileID: 11400000, guid: 3afa548db4002114b87d8d8befc1ab3a,
     type: 2}
   swingSounds:
-  - {fileID: 8300000, guid: d637bacd075454147bb398300d59dc3e, type: 3}
+  - {fileID: 8300000, guid: 7e2451714136ff64b8972f0ddb6dfaf5, type: 3}

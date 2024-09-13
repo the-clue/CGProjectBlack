@@ -48,4 +48,3 @@ MonoBehaviour:
     type: 2}
   swingSounds:
   - {fileID: 8300000, guid: 7e2451714136ff64b8972f0ddb6dfaf5, type: 3}
-  - {fileID: 8300000, guid: d637bacd075454147bb398300d59dc3e, type: 3}

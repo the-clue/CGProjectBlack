@@ -6,6 +6,9 @@ public class WorldSoundFXManager : MonoBehaviour
 {
     public static WorldSoundFXManager instance;
 
+    [Header("Ambient Tracks")]
+    [SerializeField] AudioSource ambientLoopPlayer;
+
     [Header("Boss Tracks")]
     [SerializeField] AudioSource bossIntroPlayer;
     [SerializeField] AudioSource bossLoopPlayer;
@@ -57,12 +60,47 @@ public class WorldSoundFXManager : MonoBehaviour
     }
     */
 
+    public void PlayAmbientMusic()
+    {
+        if (ambientLoopPlayer != null)
+        {
+            StartCoroutine(FadeInAmbientMusic());
+        }
+    }
+
+    private IEnumerator FadeInAmbientMusic()
+    {
+        ambientLoopPlayer.volume = 0;
+        ambientLoopPlayer.Play();
+        while (ambientLoopPlayer.volume < 1)
+        {
+            ambientLoopPlayer.volume += 0.5f * Time.deltaTime;
+            yield return null;
+        }
+
+        ambientLoopPlayer.volume = 1;
+    }
+
+    private IEnumerator FadeOutAmbientMusic()
+    {
+        while (ambientLoopPlayer.volume > 0)
+        {
+            ambientLoopPlayer.volume -= 0.5f * Time.deltaTime;
+            yield return null;
+        }
+
+        ambientLoopPlayer.volume = 0;
+        ambientLoopPlayer.Stop();
+    }
+
     public void PlayBossTrack(AudioClip introTrack, AudioClip loopTrack)
     {
         if (introTrack == null || loopTrack == null)
         {
             return;
         }
+
+        StartCoroutine(FadeOutAmbientMusic());
 
         bossIntroPlayer.volume = 1;
         bossIntroPlayer.clip = introTrack;
@@ -91,5 +129,7 @@ public class WorldSoundFXManager : MonoBehaviour
 
         bossIntroPlayer.Stop();
         bossLoopPlayer.Stop();
+
+        StartCoroutine(FadeInAmbientMusic());
     }
 }

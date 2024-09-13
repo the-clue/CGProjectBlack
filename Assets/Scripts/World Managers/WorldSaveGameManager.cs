@@ -297,6 +297,7 @@ public class WorldSaveGameManager : MonoBehaviour
         SaveGame();
 
         LoadWorldScene(worldSceneIndex);
+        WorldSoundFXManager.instance.PlayAmbientMusic();
     }
 
     public void SaveGame()
@@ -336,6 +337,7 @@ public class WorldSaveGameManager : MonoBehaviour
         currentCharacterData = saveFileCreator.LoadSaveFile();
 
         LoadWorldScene(worldSceneIndex);
+        WorldSoundFXManager.instance.PlayAmbientMusic();
     }
 
     public void DeleteGame(CharacterSlot characterSlot)
