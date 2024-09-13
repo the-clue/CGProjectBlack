@@ -24,3 +24,4 @@ You can play with keyboard and mouse but it is recommended to use a controller.
 - Running Attack: Run then Light or Heavy Attack
 - Jump Attack: Jump then Light or Heavy Attack
 - Menu: Options / Start / Esc
+- Menu navigation: D-pad / Mouse
