@@ -25,3 +25,10 @@ You can play with keyboard and mouse but it is recommended to use a controller.
 - Jump Attack: Jump then Light or Heavy Attack
 - Menu: Options / Start / Esc
 - Menu navigation: D-pad / Mouse
+
+## Assets used:
+- Animations: Straight Sword Animation Set (Paid), Frank RPG Mage, animations from Mixamo
+- Music: Dark Fantasy Music Pack 1, Free 6 Dark Fantasy Boss Battle Tracks
+- Sound Effects: Free Deadly Kombat, Voices - Essentials, Demo Ancient Magic Pack
+- Models: Low-poly models from Polytope Studio, Low-poly weapons
+- Everything else I've done myself
